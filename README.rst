@@ -1,4 +1,4 @@
-Mr Boby Rodriguez
-=================
+mr.boby.rodriguez
+================================================
 
-mr.bob template for hypsters
+See https://github.com/gawel/mr.boby.rodriguez/
