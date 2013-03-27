@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
-from chut import test, git, mkdir, wget
+from chut import test, git, cd, mkdir, chmod, which, sh, wget
 from sphinx import quickstart
 
 use_defaults = (
@@ -26,33 +26,31 @@ def pre_render(config):
         'package.version': '0.1.dev0',
         'package.url': url,
 
-        'ext_autodoc': 'y',
-        'ext_viewcode': 'y',
-        'batchfile': False,
     })
 
 
 def post_render(config):
 
+    target_directory = os.path.abspath(config.target_directory)
     pkg = config.variables['package.directory']
 
-    pkg_dir = os.path.join(config.target_directory, pkg)
+    pkg_dir = os.path.join(target_directory, pkg)
     if not test.d(pkg_dir):
         mkdir(pkg_dir)
+        with open(os.path.join(pkg_dir, '__init__.py'), 'wb') as fd:
+            fd.write('#  package\n')
 
-    bootstrap = os.path.join(config.target_directory, 'bootstrap.py')
-    if not test.f(pkg_dir):
-        wget('-O', bootstrap,
-             ('https://github.com/buildout/buildout/raw/'
-              '2/bootstrap/bootstrap.py')) > 1
-
-    doc_root = os.path.join(os.path.abspath(config.target_directory), 'docs')
-    d = dict(path=doc_root,
-             **config.variables)
+    doc_root = os.path.join(target_directory, 'docs')
+    vars = config.variables
+    d = dict(path=doc_root, author=vars['author.name'],
+             project=vars['package.name'],
+             version='', ext_autodoc='y', ext_viewcode='y',
+             batchfile=False)
 
     quickstart_do_prompt = quickstart.do_prompt
 
     def do_prompt(d, key, text, default=None, validator=quickstart.nonempty):
+        print(key)
         if key in use_defaults:
             if default == 'y':
                 default = True
@@ -65,12 +63,32 @@ def post_render(config):
     quickstart.do_prompt = do_prompt
 
     if not os.path.isdir(doc_root):
+        # launch sphinx
         quickstart.ask_user(d)
         quickstart.generate(d)
         filename = os.path.join(doc_root, 'conf.py')
-        with open(filename, 'wb') as fd:
+
+        # patch some files
+        with open(filename, 'ab') as fd:
             fd.write('''
 import pkg_resources
 version = pkg_resources.get_distribution("%s").version
 release = version
-''' % config.variables)
+''' % vars['package.name'])
+        filename = os.path.join(doc_root, 'Makefile')
+        with open(filename, 'rb') as fd:
+            data = fd.read()
+        data = data.replace('sphinx-build', '../bin/sphinx-build')
+        with open(filename, 'wb') as fd:
+            fd.write(data)
+
+    # launch buildout
+    cd(target_directory)
+    if not test.f('bootstrap.py'):
+        wget('-O bootstrap.py',
+             ('https://github.com/buildout/buildout/raw/'
+              '2/bootstrap/bootstrap.py')) > 1
+        chmod('+x bootstrap.py')
+
+    if which('bootstrap'):
+        sh['bootstrap']() > 1
