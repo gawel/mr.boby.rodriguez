@@ -1,12 +1,19 @@
+# -*- coding: utf-8 -*-
+import os
 from setuptools import setup
 from setuptools import find_packages
 
 version = '0.1.dev0'
 
+
+def read(*rnames):
+    return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
+
+
 setup(name='mr.boby.rodriguez',
       version=version,
       description="mr.boby.rodriguez package",
-      long_description=open('README.rst').read(),
+      long_description=read('README.rst'),
       classifiers=[
           'Intended Audience :: Developers',
           'Programming Language :: Python :: 2.7',
