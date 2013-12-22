@@ -1,0 +1,16 @@
+{
+  "name": "{{{package.name}}}",
+  "version": "{{{package.version}}}",
+  "homepage": "{{{package.url}}}",
+  "authors": [
+    "{{{author.name}}} <{{{author.email}}}>"
+  ],
+  "main": [
+  ],
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+      "bootstrap": "3.0.2",
+      "angular": "1.2.1"
+  }
+}

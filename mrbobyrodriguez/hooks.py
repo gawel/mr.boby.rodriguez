@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
-from chut import test, git, cd, mkdir, chmod, which, sh, wget
+from chut import test, git, cd, mkdir, chmod, sh, wget
 from sphinx import quickstart
 
 use_defaults = (
@@ -20,6 +20,7 @@ def pre_render(config):
         pkg = pkg.replace(l, '_')
     url = 'https://github.com/{0}/{1}/'.format(github_user, pkgname)
     config.variables.update({
+        'github.user': github_user,
         'package.name': pkgname,
         'package.directory': pkg,
         'project': pkgname,
@@ -71,6 +72,7 @@ def post_render(config):
         # patch some files
         with open(filename, 'ab') as fd:
             fd.write('''
+html_theme = 'nature'
 import pkg_resources
 version = pkg_resources.get_distribution("%s").version
 release = version
@@ -87,8 +89,9 @@ release = version
     if not test.f('bootstrap.py'):
         wget('-O bootstrap.py',
              ('https://github.com/buildout/buildout/raw/'
-              '2/bootstrap/bootstrap.py')) > 1
+              'master/bootstrap/bootstrap.py')) > 1
         chmod('+x bootstrap.py')
 
-    if which('bootstrap'):
-        sh['bootstrap']() > 1
+    sh.python('bootstrap.py --allow-site-packages') > 1
+    if test.f('bin/buildout'):
+        sh.python('bin/buildout') > 1

@@ -5,10 +5,15 @@ extensions = gp.vcsdevelop
 parts = eggs
 develop = .
 
-
 [eggs]
 recipe = zc.recipe.egg
 eggs =
     Sphinx
     {{{package.name}}}
 
+[tests]
+recipe = zc.recipe.egg
+eggs =
+    {{{package.name}}}[test]
+dependent-scripts = true
+scripts = nosetests

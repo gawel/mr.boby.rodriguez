@@ -5,7 +5,7 @@ with-doctest = True
 doctest-extension = txt
 doctest-fixtures = _fixt
 include = docs
-cover-package=webtest
+cover-package={{{package.name}}}
 with-coverage=1
 doctest-options = +ELLIPSIS,+NORMALIZE_WHITESPACE
 

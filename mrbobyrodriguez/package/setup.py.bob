@@ -10,30 +10,35 @@ def read(*rnames):
     return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
 
 
-setup(name='{{{package.name}}}',
-      version=version,
-      description="{{{package.name}}} package",
-      long_description=read('README.rst'),
-      classifiers=[
-          'Intended Audience :: Developers',
-          'Programming Language :: Python :: 2.7',
-          'Programming Language :: Python :: 3.3',
-          'License :: OSI Approved :: MIT License',
-      ],
-      keywords='',
-      author='{{{author.name}}}',
-      author_email='{{{author.email}}}',
-      url='{{{package.url}}}',
-      license='MIT',
-      packages=find_packages(exclude=['docs', 'tests']),
-      include_package_data=True,
-      zip_safe=False,
-      install_requires=[],
-      extras_require={
-        'test': ['nose'],
-      },
-      entry_points="""
-      [console_scripts]
-      #{{{package.directory}}} = {{{package.directory}}}.scripts:main
-      """,
-      )
+setup(
+    name='{{{package.name}}}',
+    version=version,
+    description="{{{package.name}}} package",
+    long_description=read('README.rst'),
+    classifiers=[
+        'Intended Audience :: Developers',
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: 3.4',
+        'License :: OSI Approved :: MIT License',
+    ],
+    keywords='',
+    author='{{{author.name}}}',
+    author_email='{{{author.email}}}',
+    url='{{{package.url}}}',
+    license='MIT',
+    packages=find_packages(exclude=['docs', 'tests']),
+    include_package_data=True,
+    zip_safe=False,
+    install_requires=[
+    ],
+    extras_require={
+        'test': [
+            'nose', 'webtest', 'coverage', 'coveralls',
+        ],
+    },
+    entry_points="""
+    [console_scripts]
+    #{{{package.directory}}} = {{{package.directory}}}.scripts:main
+    """,
+)

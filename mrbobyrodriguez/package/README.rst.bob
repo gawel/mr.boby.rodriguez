@@ -1,4 +1,15 @@
 {{{package.name}}}
 ================================================
 
-See {{{package.url}}}
+.. image:: https://travis-ci.org/{{{github.user}}}/{{{package.name}}}.png?branch=master
+  :target: https://travis-ci.org/{{{github.user}}}/{{{package.name}}}
+.. image:: https://coveralls.io/repos/{{{github.user}}}/{{{package.name}}}/badge.png?branch=master
+  :target: https://coveralls.io/r/{{{github.user}}}/{{{package.name}}}?branch=master
+.. image:: https://pypip.in/v/{{{package.name}}}/badge.png
+   :target: https://crate.io/packages/{{{package.name}}}/
+.. image:: https://pypip.in/d/{{{package.name}}}/badge.png
+   :target: https://crate.io/packages/{{{package.name}}}/
+
+Source: {{{package.url}}}
+
+Docs: https://{{{package.name}}}.readthedocs.org/
