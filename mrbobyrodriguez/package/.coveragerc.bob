@@ -1,8 +1,12 @@
 [run]
 omit =
+    */docs*
     */tests*
     */examples*
+    */lib_pypy*
     */lib/python*
+    */lib-python*
+    */site-packages*
 
 [report]
 exclude_lines =
