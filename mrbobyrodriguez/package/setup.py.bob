@@ -34,7 +34,7 @@ setup(
     ],
     extras_require={
         'test': [
-            'nose', 'webtest', 'coverage', 'coveralls',
+            'pytest', 'webtest', 'coverage', 'coveralls',
         ],
     },
     entry_points="""

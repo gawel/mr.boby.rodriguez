@@ -88,8 +88,7 @@ release = version
     cd(target_directory)
     if not test.f('bootstrap.py'):
         wget('-O bootstrap.py',
-             ('https://github.com/buildout/buildout/raw/'
-              'master/bootstrap/bootstrap.py')) > 1
+             'https://bootstrap.pypa.io/bootstrap-buildout.py') > 1
         chmod('+x bootstrap.py')
 
     sh.python('bootstrap.py --allow-site-packages') > 1

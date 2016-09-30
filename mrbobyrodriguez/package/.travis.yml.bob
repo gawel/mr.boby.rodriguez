@@ -1,12 +1,13 @@
+sudo: false
 language: python
-python:
-  - 2.6
-  - 2.7
-  - 3.2
-  - 3.3
-  - pypy
+python: 3.5
 install:
-  - python setup.py dev
+  - pip install tox coveralls
 script:
-  - nosetests
+  - tox
+after_success:
   - coveralls
+env:
+  - TOXENV=py27
+  - TOXENV=py34
+  - TOXENV=py35
